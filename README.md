@@ -1,10 +1,14 @@
 # Easy Ethernet Icon for macOS
 
-~~⚠️ THE PROJECT IS NO LONGER MAINTAINED! ⚠️~~
+![Platform](https://img.shields.io/badge/macOS-13.5+-orange.svg)
+![Swift](https://img.shields.io/badge/Swift-5-blue.svg)
+![Xcode](https://img.shields.io/badge/Xcode-15-lavender.svg)
 
 A simple and lightweight macOS menu bar application that shows your Ethernet connection status at a glance.
 
-![Different icon styles](https://i.ibb.co/kD2KbCs/win.png)
+| macOS icon | Windows icon |
+| --- | --- |
+| ![macOS](Images/macOS-icon.png) | ![macOS](Images/macOS-icon.png) |
 
 ## Features
 
@@ -51,7 +55,9 @@ If you want to build the app yourself:
 4. Build the project (⌘B)
 
 ## Privacy
+
 This app:
+
 - Only monitors the ethernet connection status
 
 ---
