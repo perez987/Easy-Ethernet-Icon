@@ -16,27 +16,27 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
 
     // Menu items
     let ethernetStatusItem = NSMenuItem(
-        title: "Checking Ethernet Status...",
+        title: L10n.text("menu.checking_ethernet"),
         action: nil,
         keyEquivalent: ""
     )
     let speedStatusItem = NSMenuItem(
-        title: "Speed: -",
+        title: L10n.text("menu.speed.placeholder"),
         action: nil,
         keyEquivalent: ""
     )
     let quitApplicationItem = NSMenuItem(
-        title: "Quit Application",
+        title: L10n.text("menu.quit"),
         action: #selector(quitApplication),
         keyEquivalent: "q"
     )
     let networkSettingsItem = NSMenuItem(
-        title: "Open Network Settings",
+        title: L10n.text("menu.open_network_settings"),
         action: #selector(openNetworkSettings),
         keyEquivalent: "n"
     )
     let settingsItem = NSMenuItem(
-        title: "Settings",
+        title: L10n.text("menu.settings"),
         action: #selector(openSettings),
         keyEquivalent: "s"
     )
@@ -73,12 +73,18 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 if !self.isMonitoredServiceResolved {
-                    self.speedStatusItem.title = "Speed: -"
+                    self.speedStatusItem.title = L10n.text("menu.speed.placeholder")
                     return
                 }
 
                 let unit = UserDefaults.standard.string(forKey: "speedUnit") ?? "MB/s"
-                let speedText = String(format: "Speed: %.1f %@ ↓ | %.1f %@ ↑", download, unit, upload, unit)
+                let speedText = String(
+                    format: L10n.text("menu.speed.format"),
+                    download,
+                    unit,
+                    upload,
+                    unit
+                )
                 self.speedStatusItem.title = speedText
             }
         }
@@ -100,7 +106,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         } else {
             networkMonitor.stopMonitoring()
             DispatchQueue.main.async {
-                self.speedStatusItem.title = "Speed: -"
+                self.speedStatusItem.title = L10n.text("menu.speed.placeholder")
             }
         }
     }
@@ -181,9 +187,19 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         isResolved: Bool
     ) {
         if isResolved {
-            ethernetStatusItem.title = "\(serviceName): \(status == .connected ? "Connected" : "Disconnected")"
+            let statusText = status == .connected
+                ? L10n.text("menu.status.connected")
+                : L10n.text("menu.status.disconnected")
+            ethernetStatusItem.title = String(
+                format: L10n.text("menu.service.status_format"),
+                serviceName,
+                statusText
+            )
         } else {
-            ethernetStatusItem.title = "\(serviceName): Not Found"
+            ethernetStatusItem.title = String(
+                format: L10n.text("menu.service.not_found_format"),
+                serviceName
+            )
         }
     }
 
