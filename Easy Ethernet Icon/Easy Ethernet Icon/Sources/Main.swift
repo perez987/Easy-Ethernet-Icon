@@ -9,7 +9,7 @@ extension Notification.Name {
 
 /// Main application structure
 @main
-struct Ethernet_Menu_IconApp: App {
+struct EthernetMenuIconApp: App {
     // Links the AppDelegate to the SwiftUI application lifecycle
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 

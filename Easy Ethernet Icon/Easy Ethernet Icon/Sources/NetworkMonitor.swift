@@ -63,7 +63,7 @@ class NetworkMonitor {
     }
 
     private func getNetworkCounters() -> (received: UInt64, sent: UInt64)? {
-        var ifaddrs: UnsafeMutablePointer<ifaddrs>? = nil
+        var ifaddrs: UnsafeMutablePointer<ifaddrs>?
         guard getifaddrs(&ifaddrs) == 0, let firstAddr = ifaddrs else { return nil }
         defer { freeifaddrs(ifaddrs) }
 

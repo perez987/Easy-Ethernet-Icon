@@ -9,8 +9,8 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
 
     /// Represents the possible states of ethernet connection
     enum ConnectionStatus {
-        case Connected
-        case Disconnected
+        case connected
+        case disconnected
     }
 
     // Menu items
@@ -120,8 +120,8 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
 
         monitor.pathUpdateHandler = { path in
             let status: ConnectionStatus = path.status == .satisfied
-                ? .Connected
-                : .Disconnected
+                ? .connected
+                : .disconnected
 
             statusUpdate(status)
 
@@ -134,7 +134,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
     }
 
     private func updateStatusMenuItem(status: ConnectionStatus) {
-        ethernetStatusItem.title = "Ethernet: \(status == .Connected ? "Connected" : "Disconnected")"
+        ethernetStatusItem.title = "Ethernet: \(status == .connected ? "Connected" : "Disconnected")"
     }
 
     func stopMonitoring() {
