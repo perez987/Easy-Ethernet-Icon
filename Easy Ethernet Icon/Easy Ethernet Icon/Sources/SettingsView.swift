@@ -65,7 +65,7 @@ struct SettingsView: View {
                 .padding(20)
             }
         }
-        .frame(width: 420, height: 276)
+        .frame(width: 420, height: 304)
         .background(Color(NSColor.windowBackgroundColor))
         .cornerRadius(12)
         .shadow(radius: 8)

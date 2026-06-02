@@ -25,20 +25,20 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         action: nil,
         keyEquivalent: ""
     )
-    let quitApplicationItem = NSMenuItem(
-        title: L10n.text("menu.quit"),
-        action: #selector(quitApplication),
-        keyEquivalent: "q"
+    let settingsItem = NSMenuItem(
+        title: L10n.text("menu.settings"),
+        action: #selector(openSettings),
+        keyEquivalent: "s"
     )
     let networkSettingsItem = NSMenuItem(
         title: L10n.text("menu.open_network_settings"),
         action: #selector(openNetworkSettings),
         keyEquivalent: "n"
     )
-    let settingsItem = NSMenuItem(
-        title: L10n.text("menu.settings"),
-        action: #selector(openSettings),
-        keyEquivalent: "s"
+    let quitApplicationItem = NSMenuItem(
+        title: L10n.text("menu.quit"),
+        action: #selector(quitApplication),
+        keyEquivalent: "q"
     )
 
     // Settings window reference

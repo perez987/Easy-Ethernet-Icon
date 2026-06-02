@@ -24,4 +24,4 @@
 "settings.network.interval.one_second" = "1 segundo";
 "settings.network.interval.seconds_format" = "%d segundos";
 "settings.about.more_information" = "Más información";
-"settings.about.version" = "Hecho por Felix Blome | v1.2";
+"settings.about.version" = "Hecho por Felix Blome | v1.2.0\n     (Interfaz Ethernet)\nActualizado por Emilio P. Egido | v1.4.0\n     (Interfaz Ethernet 2)";
