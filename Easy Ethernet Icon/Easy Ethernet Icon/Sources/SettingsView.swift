@@ -2,10 +2,18 @@ import LaunchAtLogin
 import SwiftUI
 
 /// Enum for tab selection with three options
-enum SettingsTab: String, CaseIterable {
-    case general = "General"
-    case network = "Network"
-    case about = "About"
+enum SettingsTab: CaseIterable {
+    case general
+    case network
+    case about
+
+    var titleKey: String {
+        switch self {
+        case .general: return "settings.tab.general"
+        case .network: return "settings.tab.network"
+        case .about: return "settings.tab.about"
+        }
+    }
 }
 
 /// Main settings view with tabs
@@ -23,7 +31,7 @@ struct SettingsView: View {
                             Image(systemName: icon(for: tab))
                                 .font(.system(size: 18, weight: .medium))
                                 .foregroundColor(selectedTab == tab ? .accentColor : .gray)
-                            Text(tab.rawValue)
+                            Text(L10n.text(tab.titleKey))
                                 .font(.system(size: 12, weight: .medium))
                                 .foregroundColor(selectedTab == tab ? .accentColor : .gray)
                         }
@@ -33,7 +41,7 @@ struct SettingsView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle(L10n.text("settings.title"))
             .background(Color(NSColor.windowBackgroundColor).opacity(0.9))
             .cornerRadius(8)
             .padding(.horizontal, 20)
@@ -82,7 +90,7 @@ struct GeneralSettingsView: View {
         VStack(alignment: .leading, spacing: 16) {
             // Launch at login toggle with aligned label and switch
             HStack(alignment: .center) {
-                Text("Launch at login")
+                Text(L10n.text("settings.general.launch_at_login"))
                     .font(.system(size: 14))
                     .frame(width: 120, alignment: .leading) // Fixed width for alignment
                 LaunchAtLogin.Toggle("")
@@ -92,21 +100,21 @@ struct GeneralSettingsView: View {
 
             // Icon Style selector with aligned label and dropdown
             HStack(alignment: .center) {
-                Text("Icon Style:")
+                Text(L10n.text("settings.general.icon_style"))
                     .font(.system(size: 14))
                     .frame(width: 120, alignment: .leading) // Fixed width for alignment
 
                 // Dropdown menu for icon style selection
                 Menu(content: {
                     Button(action: { updateIcon(selectedOption: "Windows") }, label: {
-                        Text("Windows")
+                        Text(L10n.text("settings.general.icon.windows"))
                     })
                     Button(action: { updateIcon(selectedOption: "macOS") }, label: {
-                        Text("macOS")
+                        Text(L10n.text("settings.general.icon.macos"))
                     })
                 }, label: {
                     HStack {
-                        Text(selectedOption)
+                        Text(localizedIconStyleName)
                             .foregroundColor(.primary)
                         Spacer()
                         Image(systemName: "chevron.down")
@@ -132,6 +140,12 @@ struct GeneralSettingsView: View {
         self.selectedOption = selectedOption
         AppDelegate.instance?.updateStatusIcon()
     }
+
+    private var localizedIconStyleName: String {
+        selectedOption == "Windows"
+            ? L10n.text("settings.general.icon.windows")
+            : L10n.text("settings.general.icon.macos")
+    }
 }
 
 struct NetworkSettingsView: View {
@@ -148,7 +162,7 @@ struct NetworkSettingsView: View {
             let labelWidth: CGFloat = 160
 
             HStack(alignment: .center) {
-                Text("Network service name")
+                Text(L10n.text("settings.network.service_name"))
                     .font(.system(size: 14))
                     .frame(width: labelWidth, alignment: .leading)
 
@@ -162,7 +176,7 @@ struct NetworkSettingsView: View {
 
             // Show speed toggle
             HStack(alignment: .center) {
-                Text("Show connection speed")
+                Text(L10n.text("settings.network.show_speed"))
                     .font(.system(size: 14))
                     .frame(width: labelWidth, alignment: .leading)
 
@@ -172,7 +186,7 @@ struct NetworkSettingsView: View {
 
             // Speed unit dropdown
             HStack(alignment: .center) {
-                Text("Speed unit")
+                Text(L10n.text("settings.network.speed_unit"))
                     .font(.system(size: 14))
                     .frame(width: labelWidth, alignment: .leading)
 
@@ -192,31 +206,31 @@ struct NetworkSettingsView: View {
 
             // Refresh interval dropdown
             HStack(alignment: .center) {
-                Text("Refresh interval")
+                Text(L10n.text("settings.network.refresh_interval"))
                     .font(.system(size: 14))
                     .frame(width: labelWidth, alignment: .leading)
 
                 Menu(content: {
                     Button(action: { refreshInterval = 1.0 }, label: {
-                        Text("1 second")
+                        Text(localizedIntervalLabel(for: 1))
                     })
                     Button(action: { refreshInterval = 3.0 }, label: {
-                        Text("3 seconds")
+                        Text(localizedIntervalLabel(for: 3))
                     })
                     Button(action: { refreshInterval = 5.0 }, label: {
-                        Text("5 seconds")
+                        Text(localizedIntervalLabel(for: 5))
                     })
                     Button(action: { refreshInterval = 10.0 }, label: {
-                        Text("10 seconds")
+                        Text(localizedIntervalLabel(for: 10))
                     })
                     Button(action: { refreshInterval = 30.0 }, label: {
-                        Text("30 seconds")
+                        Text(localizedIntervalLabel(for: 30))
                     })
                     Button(action: { refreshInterval = 60.0 }, label: {
-                        Text("60 seconds")
+                        Text(localizedIntervalLabel(for: 60))
                     })
                 }, label: {
-                    dropdownLabel(title: "\(Int(refreshInterval)) seconds")
+                    dropdownLabel(title: localizedIntervalLabel(for: Int(refreshInterval)))
                 })
                 .frame(width: 120)
                 .disabled(!showConnectionSpeed)
@@ -243,6 +257,14 @@ struct NetworkSettingsView: View {
                 .stroke(Color.gray.opacity(0.3), lineWidth: 1)
         )
     }
+
+    private func localizedIntervalLabel(for seconds: Int) -> String {
+        if seconds == 1 {
+            return L10n.text("settings.network.interval.one_second")
+        }
+
+        return String(format: L10n.text("settings.network.interval.seconds_format"), seconds)
+    }
 }
 
 /// About settings view content
@@ -252,12 +274,15 @@ struct AboutSettingsView: View {
             Text("Easy Ethernet Icon")
                 .font(.system(size: 16, weight: .bold))
 
-            Link("More information", destination: URL(string: "https://github.com/felixblome/easy-ethernet-icon")!)
+            Link(
+                L10n.text("settings.about.more_information"),
+                destination: URL(string: "https://github.com/felixblome/easy-ethernet-icon")!
+            )
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(.accentColor)
                 .padding(.top, 5)
 
-            Text("Made by Felix Blome | v1.2")
+            Text(L10n.text("settings.about.version"))
                 .font(.system(size: 12, weight: .regular))
                 .foregroundColor(.secondary)
                 .padding(.top, 4)

@@ -1,0 +1,27 @@
+"menu.checking_ethernet" = "Checking Ethernet Status...";
+"menu.speed.placeholder" = "Speed: -";
+"menu.speed.format" = "Speed: %.1f %@ ↓ | %.1f %@ ↑";
+"menu.quit" = "Quit Application";
+"menu.open_network_settings" = "Open Network Settings";
+"menu.settings" = "Settings";
+"menu.status.connected" = "Connected";
+"menu.status.disconnected" = "Disconnected";
+"menu.service.status_format" = "%1$@: %2$@";
+"menu.service.not_found_format" = "%@: Not Found";
+
+"settings.title" = "Settings";
+"settings.tab.general" = "General";
+"settings.tab.network" = "Network";
+"settings.tab.about" = "About";
+"settings.general.launch_at_login" = "Launch at login";
+"settings.general.icon_style" = "Icon Style:";
+"settings.general.icon.windows" = "Windows";
+"settings.general.icon.macos" = "macOS";
+"settings.network.service_name" = "Network service name";
+"settings.network.show_speed" = "Show connection speed";
+"settings.network.speed_unit" = "Speed unit";
+"settings.network.refresh_interval" = "Refresh interval";
+"settings.network.interval.one_second" = "1 second";
+"settings.network.interval.seconds_format" = "%d seconds";
+"settings.about.more_information" = "More information";
+"settings.about.version" = "Made by Felix Blome | v1.2";
