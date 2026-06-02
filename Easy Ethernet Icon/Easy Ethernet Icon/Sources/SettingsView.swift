@@ -18,7 +18,7 @@ struct SettingsView: View {
             // Tab bar at the top
             HStack {
                 ForEach(SettingsTab.allCases, id: \.self) { tab in
-                    Button(action: { selectedTab = tab }) {
+                    Button(action: { selectedTab = tab }, label: {
                         VStack(spacing: 4) {
                             Image(systemName: icon(for: tab))
                                 .font(.system(size: 18, weight: .medium))
@@ -29,7 +29,7 @@ struct SettingsView: View {
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)
-                    }
+                    })
                     .buttonStyle(PlainButtonStyle())
                 }
             }
@@ -97,14 +97,14 @@ struct GeneralSettingsView: View {
                     .frame(width: 120, alignment: .leading) // Fixed width for alignment
 
                 // Dropdown menu for icon style selection
-                Menu {
-                    Button(action: { updateIcon(selectedOption: "Windows") }) {
+                Menu(content: {
+                    Button(action: { updateIcon(selectedOption: "Windows") }, label: {
                         Text("Windows")
-                    }
-                    Button(action: { updateIcon(selectedOption: "macOS") }) {
+                    })
+                    Button(action: { updateIcon(selectedOption: "macOS") }, label: {
                         Text("macOS")
-                    }
-                } label: {
+                    })
+                }, label: {
                     HStack {
                         Text(selectedOption)
                             .foregroundColor(.primary)
@@ -120,7 +120,7 @@ struct GeneralSettingsView: View {
                         RoundedRectangle(cornerRadius: 6)
                             .stroke(Color.gray.opacity(0.3), lineWidth: 1)
                     )
-                }
+                })
                 .frame(width: 120) // Ensure consistent width for dropdown
             }
             .padding(.horizontal, 16)
@@ -160,16 +160,16 @@ struct NetworkSettingsView: View {
                     .font(.system(size: 14))
                     .frame(width: labelWidth, alignment: .leading)
 
-                Menu {
-                    Button(action: { speedUnit = "KB/s" }) {
+                Menu(content: {
+                    Button(action: { speedUnit = "KB/s" }, label: {
                         Text("KB/s")
-                    }
-                    Button(action: { speedUnit = "MB/s" }) {
+                    })
+                    Button(action: { speedUnit = "MB/s" }, label: {
                         Text("MB/s")
-                    }
-                } label: {
+                    })
+                }, label: {
                     dropdownLabel(title: speedUnit)
-                }
+                })
                 .frame(width: 120)
                 .disabled(!showConnectionSpeed)
             }
@@ -180,28 +180,28 @@ struct NetworkSettingsView: View {
                     .font(.system(size: 14))
                     .frame(width: labelWidth, alignment: .leading)
 
-                Menu {
-                    Button(action: { refreshInterval = 1.0 }) {
+                Menu(content: {
+                    Button(action: { refreshInterval = 1.0 }, label: {
                         Text("1 second")
-                    }
-                    Button(action: { refreshInterval = 3.0 }) {
+                    })
+                    Button(action: { refreshInterval = 3.0 }, label: {
                         Text("3 seconds")
-                    }
-                    Button(action: { refreshInterval = 5.0 }) {
+                    })
+                    Button(action: { refreshInterval = 5.0 }, label: {
                         Text("5 seconds")
-                    }
-                    Button(action: { refreshInterval = 10.0 }) {
+                    })
+                    Button(action: { refreshInterval = 10.0 }, label: {
                         Text("10 seconds")
-                    }
-                    Button(action: { refreshInterval = 30.0 }) {
+                    })
+                    Button(action: { refreshInterval = 30.0 }, label: {
                         Text("30 seconds")
-                    }
-                    Button(action: { refreshInterval = 60.0 }) {
+                    })
+                    Button(action: { refreshInterval = 60.0 }, label: {
                         Text("60 seconds")
-                    }
-                } label: {
+                    })
+                }, label: {
                     dropdownLabel(title: "\(Int(refreshInterval)) seconds")
-                }
+                })
                 .frame(width: 120)
                 .disabled(!showConnectionSpeed)
             }

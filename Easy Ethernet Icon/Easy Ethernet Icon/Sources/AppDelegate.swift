@@ -52,7 +52,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Updates the status bar icon when settings change
     @objc func updateIcon() {
         statusBarItem.button?.image = getConnectionImage(
-            status: .Disconnected,
+            status: .disconnected,
             setting: settingsView
         )
     }
@@ -79,8 +79,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ) -> NSImage {
         // Choose icon based on selected style (macOS or default/Windows style)
         let imageName = setting.selectedOption == "macOS"
-            ? "macOS_Ethernet\(status == .Connected ? "Connected" : "Disconnected")"
-            : "Default_Ethernet\(status == .Connected ? "Connected" : "Disconnected")"
+            ? "macOS_Ethernet\(status == .connected ? "Connected" : "Disconnected")"
+            : "Default_Ethernet\(status == .connected ? "Connected" : "Disconnected")"
 
         let image = NSImage(named: imageName) ?? NSImage()
         image.size = NSSize(width: fixedImageSize, height: fixedImageSize)
