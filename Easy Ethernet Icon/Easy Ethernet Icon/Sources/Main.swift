@@ -1,6 +1,6 @@
-import SwiftUI
 import Cocoa
 import Network
+import SwiftUI
 
 /// Custom notification for icon style changes
 extension Notification.Name {
@@ -12,7 +12,7 @@ extension Notification.Name {
 struct Ethernet_Menu_IconApp: App {
     // Links the AppDelegate to the SwiftUI application lifecycle
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
+
     var body: some Scene {
         // Creates the settings scene for the application
         Settings {
