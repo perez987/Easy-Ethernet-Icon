@@ -3,6 +3,8 @@ import SwiftUI
 
 /// Manages the application's menu and monitors ethernet connection status
 class ApplicationMenu: NSObject, NSWindowDelegate {
+    private let statusPollingInterval = 1.0
+
     // Main menu instance
     let menu = NSMenu()
 
@@ -47,6 +49,8 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
     private var statusMonitorTimer: DispatchSourceTimer?
     private var statusUpdateHandler: ((ConnectionStatus) -> Void)?
     private(set) var currentConnectionStatus: ConnectionStatus = .disconnected
+    private(set) var currentMonitoredServiceName = MonitoredNetworkService.configuredServiceName
+    private(set) var isMonitoredServiceResolved = false
     private var lastMonitoredServiceName: String?
 
     override init() {
@@ -54,7 +58,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         setupMenuItems()
         setupSpeedMonitoring()
 
-        // Observe changes to showConnectionSpeed setting
+        // Observe settings changes that affect the monitored service or displayed speed
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleSettingsChange),
@@ -68,6 +72,11 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         networkMonitor.onSpeedUpdate = { [weak self] download, upload in
             guard let self = self else { return }
             DispatchQueue.main.async {
+                if !self.isMonitoredServiceResolved {
+                    self.speedStatusItem.title = "Speed: -"
+                    return
+                }
+
                 let unit = UserDefaults.standard.string(forKey: "speedUnit") ?? "MB/s"
                 let speedText = String(format: "Speed: %.1f %@ ↓ | %.1f %@ ↑", download, unit, upload, unit)
                 self.speedStatusItem.title = speedText
@@ -124,7 +133,8 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
 
         if statusMonitorTimer == nil {
             let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
-            timer.schedule(deadline: .now(), repeating: 1.0)
+            // Keep status polling responsive even when the user chooses a slower speed refresh interval.
+            timer.schedule(deadline: .now(), repeating: statusPollingInterval)
             timer.setEventHandler { [weak self] in
                 self?.refreshEthernetStatus()
             }
@@ -138,17 +148,21 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
     private func refreshEthernetStatus() {
         let serviceName = MonitoredNetworkService.configuredServiceName
         let snapshot = MonitoredNetworkService.currentSnapshot(for: serviceName)
+        let isResolved = snapshot != nil
         let status: ConnectionStatus = snapshot?.isConnected == true
             ? .connected
             : .disconnected
 
         let statusChanged = status != currentConnectionStatus
         let serviceChanged = serviceName != lastMonitoredServiceName
+        let resolutionChanged = isResolved != isMonitoredServiceResolved
 
         currentConnectionStatus = status
+        currentMonitoredServiceName = serviceName
+        isMonitoredServiceResolved = isResolved
         lastMonitoredServiceName = serviceName
 
-        guard statusChanged || serviceChanged else { return }
+        guard statusChanged || serviceChanged || resolutionChanged else { return }
 
         statusUpdateHandler?(status)
 
@@ -156,7 +170,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
             self.updateStatusMenuItem(
                 serviceName: serviceName,
                 status: status,
-                isResolved: snapshot != nil
+                isResolved: isResolved
             )
         }
     }
@@ -177,6 +191,10 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         statusMonitorTimer?.cancel()
         statusMonitorTimer = nil
         networkMonitor.stopMonitoring()
+    }
+
+    func refreshCurrentStatus() {
+        refreshEthernetStatus()
     }
 
     /// Quits the application

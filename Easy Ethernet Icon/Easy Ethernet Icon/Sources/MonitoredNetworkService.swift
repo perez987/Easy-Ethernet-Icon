@@ -4,6 +4,11 @@ import SystemConfiguration
 enum MonitoredNetworkService {
     static let userDefaultsKey = "monitoredNetworkServiceName"
     static let defaultServiceName = "Ethernet 2"
+    // Used only if the app bundle identifier is unavailable while opening SystemConfiguration preferences.
+    private static let fallbackPreferencesIdentifier = "Easy Ethernet Icon"
+    // Some macOS services wrap the real BSD device in a small stack of virtual interfaces.
+    // Cap recursion so a malformed interface graph cannot recurse indefinitely.
+    private static let maxInterfaceNestingDepth = 10
 
     struct InterfaceSnapshot {
         let bsdName: String
@@ -30,7 +35,11 @@ enum MonitoredNetworkService {
 
     private static func bsdInterfaceName(for serviceName: String) -> String? {
         guard
-            let preferences = SCPreferencesCreate(nil, "EasyEthernetIcon" as CFString, nil),
+            let preferences = SCPreferencesCreate(
+                nil,
+                (Bundle.main.bundleIdentifier ?? fallbackPreferencesIdentifier) as CFString,
+                nil
+            ),
             let services = SCNetworkServiceCopyAll(preferences) as? [SCNetworkService]
         else {
             return nil
@@ -49,7 +58,9 @@ enum MonitoredNetworkService {
         return nil
     }
 
-    private static func bsdName(for interface: SCNetworkInterface) -> String? {
+    private static func bsdName(for interface: SCNetworkInterface, depth: Int = 0) -> String? {
+        guard depth < maxInterfaceNestingDepth else { return nil }
+
         if let bsdName = SCNetworkInterfaceGetBSDName(interface) as String? {
             return bsdName
         }
@@ -58,7 +69,7 @@ enum MonitoredNetworkService {
             return nil
         }
 
-        return bsdName(for: nestedInterface)
+        return bsdName(for: nestedInterface, depth: depth + 1)
     }
 
     private static func interfaceSnapshot(forBSDName bsdName: String) -> InterfaceSnapshot? {

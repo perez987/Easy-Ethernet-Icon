@@ -135,6 +135,7 @@ struct GeneralSettingsView: View {
 }
 
 struct NetworkSettingsView: View {
+    // Mirror the centralized default so the field shows the same initial service name the monitor uses.
     @AppStorage(MonitoredNetworkService.userDefaultsKey)
     var monitoredNetworkServiceName: String = MonitoredNetworkService.defaultServiceName
     @AppStorage("showConnectionSpeed") var showConnectionSpeed: Bool = false
@@ -222,9 +223,6 @@ struct NetworkSettingsView: View {
             }
         }
         .padding(.horizontal, 16)
-        .onChange(of: monitoredNetworkServiceName) { _ in
-            AppDelegate.instance?.updateStatusIcon()
-        }
     }
 
     /// Dropdown-Label-Styling als Wiederverwendbare Funktion

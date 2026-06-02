@@ -89,6 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Triggers a refresh of the status icon
     func updateStatusIcon() {
+        menu.refreshCurrentStatus()
         updateStatusBarIcon(status: menu.currentConnectionStatus)
     }
 }
