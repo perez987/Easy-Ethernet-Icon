@@ -1,9 +1,10 @@
 import Cocoa
-import Network
 import SwiftUI
 
 /// Manages the application's menu and monitors ethernet connection status
 class ApplicationMenu: NSObject, NSWindowDelegate {
+    private let statusPollingInterval = 1.0
+
     // Main menu instance
     let menu = NSMenu()
 
@@ -45,16 +46,22 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
 
     // Reference to NetworkMonitor
     private let networkMonitor = NetworkMonitor()
+    private var statusMonitorTimer: DispatchSourceTimer?
+    private var statusUpdateHandler: ((ConnectionStatus) -> Void)?
+    private(set) var currentConnectionStatus: ConnectionStatus = .disconnected
+    private(set) var currentMonitoredServiceName = MonitoredNetworkService.configuredServiceName
+    private(set) var isMonitoredServiceResolved = false
+    private var lastMonitoredServiceName: String?
 
     override init() {
         super.init()
         setupMenuItems()
         setupSpeedMonitoring()
 
-        // Observe changes to showConnectionSpeed setting
+        // Observe settings changes that affect the monitored service or displayed speed
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(handleSpeedSettingChange),
+            selector: #selector(handleSettingsChange),
             name: UserDefaults.didChangeNotification,
             object: nil
         )
@@ -65,6 +72,11 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         networkMonitor.onSpeedUpdate = { [weak self] download, upload in
             guard let self = self else { return }
             DispatchQueue.main.async {
+                if !self.isMonitoredServiceResolved {
+                    self.speedStatusItem.title = "Speed: -"
+                    return
+                }
+
                 let unit = UserDefaults.standard.string(forKey: "speedUnit") ?? "MB/s"
                 let speedText = String(format: "Speed: %.1f %@ ↓ | %.1f %@ ↑", download, unit, upload, unit)
                 self.speedStatusItem.title = speedText
@@ -75,8 +87,9 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         updateSpeedMonitoring()
     }
 
-    @objc private func handleSpeedSettingChange() {
+    @objc private func handleSettingsChange() {
         updateSpeedMonitoring()
+        refreshEthernetStatus()
     }
 
     private func updateSpeedMonitoring() {
@@ -116,29 +129,72 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
 
     /// Starts monitoring ethernet connection status
     func startMonitoringEthernetStatus(statusUpdate: @escaping (ConnectionStatus) -> Void) {
-        let monitor = NWPathMonitor(requiredInterfaceType: .wiredEthernet)
+        statusUpdateHandler = statusUpdate
 
-        monitor.pathUpdateHandler = { path in
-            let status: ConnectionStatus = path.status == .satisfied
-                ? .connected
-                : .disconnected
-
-            statusUpdate(status)
-
-            DispatchQueue.main.async {
-                self.updateStatusMenuItem(status: status)
+        if statusMonitorTimer == nil {
+            let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
+            // Keep status polling responsive even when the user chooses a slower speed refresh interval.
+            timer.schedule(deadline: .now(), repeating: statusPollingInterval)
+            timer.setEventHandler { [weak self] in
+                self?.refreshEthernetStatus()
             }
+            statusMonitorTimer = timer
+            timer.resume()
         }
 
-        monitor.start(queue: DispatchQueue.global(qos: .background))
+        refreshEthernetStatus()
     }
 
-    private func updateStatusMenuItem(status: ConnectionStatus) {
-        ethernetStatusItem.title = "Ethernet: \(status == .connected ? "Connected" : "Disconnected")"
+    private func refreshEthernetStatus() {
+        let serviceName = MonitoredNetworkService.configuredServiceName
+        let snapshot = MonitoredNetworkService.currentSnapshot(for: serviceName)
+        let isResolved = snapshot != nil
+        let status: ConnectionStatus = snapshot?.isConnected == true
+            ? .connected
+            : .disconnected
+
+        let statusChanged = status != currentConnectionStatus
+        let serviceChanged = serviceName != lastMonitoredServiceName
+        let resolutionChanged = isResolved != isMonitoredServiceResolved
+
+        currentConnectionStatus = status
+        currentMonitoredServiceName = serviceName
+        isMonitoredServiceResolved = isResolved
+        lastMonitoredServiceName = serviceName
+
+        guard statusChanged || serviceChanged || resolutionChanged else { return }
+
+        statusUpdateHandler?(status)
+
+        DispatchQueue.main.async {
+            self.updateStatusMenuItem(
+                serviceName: serviceName,
+                status: status,
+                isResolved: isResolved
+            )
+        }
+    }
+
+    private func updateStatusMenuItem(
+        serviceName: String,
+        status: ConnectionStatus,
+        isResolved: Bool
+    ) {
+        if isResolved {
+            ethernetStatusItem.title = "\(serviceName): \(status == .connected ? "Connected" : "Disconnected")"
+        } else {
+            ethernetStatusItem.title = "\(serviceName): Not Found"
+        }
     }
 
     func stopMonitoring() {
+        statusMonitorTimer?.cancel()
+        statusMonitorTimer = nil
         networkMonitor.stopMonitoring()
+    }
+
+    func refreshCurrentStatus() {
+        refreshEthernetStatus()
     }
 
     /// Quits the application

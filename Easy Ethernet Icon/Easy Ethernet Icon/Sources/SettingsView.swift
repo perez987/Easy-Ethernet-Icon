@@ -130,11 +130,14 @@ struct GeneralSettingsView: View {
     /// Updates the icon style and triggers a refresh of the status bar icon
     func updateIcon(selectedOption: String) {
         self.selectedOption = selectedOption
-        AppDelegate.instance.updateStatusIcon()
+        AppDelegate.instance?.updateStatusIcon()
     }
 }
 
 struct NetworkSettingsView: View {
+    // Mirror the centralized default so the field shows the same initial service name the monitor uses.
+    @AppStorage(MonitoredNetworkService.userDefaultsKey)
+    var monitoredNetworkServiceName: String = MonitoredNetworkService.defaultServiceName
     @AppStorage("showConnectionSpeed") var showConnectionSpeed: Bool = false
     @AppStorage("speedUnit") var speedUnit: String = "MB/s"
     @AppStorage("refreshInterval") var refreshInterval: Double = 1.0
@@ -143,6 +146,19 @@ struct NetworkSettingsView: View {
         VStack(alignment: .leading, spacing: 16) {
             // Einheitliches Layout für Labels
             let labelWidth: CGFloat = 160
+
+            HStack(alignment: .center) {
+                Text("Network service name")
+                    .font(.system(size: 14))
+                    .frame(width: labelWidth, alignment: .leading)
+
+                TextField(
+                    MonitoredNetworkService.defaultServiceName,
+                    text: $monitoredNetworkServiceName
+                )
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(width: 180)
+            }
 
             // Show speed toggle
             HStack(alignment: .center) {

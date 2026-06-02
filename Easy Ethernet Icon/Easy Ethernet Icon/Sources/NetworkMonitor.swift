@@ -6,11 +6,14 @@ class NetworkMonitor {
     private var lastDataReceived: UInt64 = 0
     private var lastDataSent: UInt64 = 0
     private var lastUpdateTime: TimeInterval = 0
+    private var lastInterfaceName: String?
 
     var onSpeedUpdate: ((Double, Double) -> Void)?
 
     func startMonitoring() {
-        let refreshInterval = UserDefaults.standard.double(forKey: "refreshInterval")
+        stopMonitoring()
+        let storedRefreshInterval = UserDefaults.standard.double(forKey: "refreshInterval")
+        let refreshInterval = storedRefreshInterval > 0 ? storedRefreshInterval : 1.0
 
         monitorTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
         monitorTimer?.schedule(deadline: .now(), repeating: refreshInterval)
@@ -23,13 +26,39 @@ class NetworkMonitor {
     func stopMonitoring() {
         monitorTimer?.cancel()
         monitorTimer = nil
+        lastDataReceived = 0
+        lastDataSent = 0
+        lastUpdateTime = 0
+        lastInterfaceName = nil
     }
 
     private func updateNetworkUsage() {
-        guard let counters = getNetworkCounters() else { return }
+        guard let snapshot = MonitoredNetworkService.currentSnapshot() else {
+            stopTrackingCurrentInterface()
+            publishSpeed(download: 0, upload: 0)
+            return
+        }
+
+        if snapshot.bsdName != lastInterfaceName {
+            lastInterfaceName = snapshot.bsdName
+            lastDataReceived = snapshot.received
+            lastDataSent = snapshot.sent
+            lastUpdateTime = CACurrentMediaTime()
+            publishSpeed(download: 0, upload: 0)
+            return
+        }
 
         let currentTime = CACurrentMediaTime()
+        guard lastUpdateTime > 0 else {
+            lastDataReceived = snapshot.received
+            lastDataSent = snapshot.sent
+            lastUpdateTime = currentTime
+            publishSpeed(download: 0, upload: 0)
+            return
+        }
+
         let timeInterval = currentTime - lastUpdateTime
+        guard timeInterval > 0 else { return }
 
         let useKilobytes = UserDefaults.standard.string(forKey: "speedUnit") == "KB/s"
         let divisor = useKilobytes ? 1024.0 : 1_048_576.0
@@ -37,52 +66,39 @@ class NetworkMonitor {
         var downloadSpeed: Double
         var uploadSpeed: Double
 
-        if counters.received >= lastDataReceived {
-            let bytesReceived = Double(counters.received - lastDataReceived)
+        if snapshot.received >= lastDataReceived {
+            let bytesReceived = Double(snapshot.received - lastDataReceived)
             downloadSpeed = (bytesReceived / timeInterval) / divisor
         } else {
-            let bytesReceived = Double(UInt64.max - lastDataReceived + counters.received)
+            let bytesReceived = Double(UInt64.max - lastDataReceived + snapshot.received)
             downloadSpeed = (bytesReceived / timeInterval) / divisor
         }
 
-        if counters.sent >= lastDataSent {
-            let bytesSent = Double(counters.sent - lastDataSent)
+        if snapshot.sent >= lastDataSent {
+            let bytesSent = Double(snapshot.sent - lastDataSent)
             uploadSpeed = (bytesSent / timeInterval) / divisor
         } else {
-            let bytesSent = Double(UInt64.max - lastDataSent + counters.sent)
+            let bytesSent = Double(UInt64.max - lastDataSent + snapshot.sent)
             uploadSpeed = (bytesSent / timeInterval) / divisor
         }
 
-        lastDataReceived = counters.received
-        lastDataSent = counters.sent
+        lastDataReceived = snapshot.received
+        lastDataSent = snapshot.sent
         lastUpdateTime = currentTime
 
+        publishSpeed(download: downloadSpeed, upload: uploadSpeed)
+    }
+
+    private func publishSpeed(download: Double, upload: Double) {
         DispatchQueue.main.async {
-            self.onSpeedUpdate?(downloadSpeed, uploadSpeed)
+            self.onSpeedUpdate?(download, upload)
         }
     }
 
-    private func getNetworkCounters() -> (received: UInt64, sent: UInt64)? {
-        var ifaddrs: UnsafeMutablePointer<ifaddrs>?
-        guard getifaddrs(&ifaddrs) == 0, let firstAddr = ifaddrs else { return nil }
-        defer { freeifaddrs(ifaddrs) }
-
-        var dataReceived: UInt64 = 0
-        var dataSent: UInt64 = 0
-
-        for ifptr in sequence(first: firstAddr, next: { $0.pointee.ifa_next }) {
-            let flags = Int32(ifptr.pointee.ifa_flags)
-            let isUp = (flags & (IFF_UP | IFF_RUNNING)) == (IFF_UP | IFF_RUNNING)
-            let isLoopback = (flags & IFF_LOOPBACK) != 0
-
-            if !isUp || isLoopback { continue }
-
-            if let data = ifptr.pointee.ifa_data?.assumingMemoryBound(to: if_data.self) {
-                dataReceived += UInt64(data.pointee.ifi_ibytes)
-                dataSent += UInt64(data.pointee.ifi_obytes)
-            }
-        }
-
-        return (dataReceived, dataSent)
+    private func stopTrackingCurrentInterface() {
+        lastDataReceived = 0
+        lastDataSent = 0
+        lastUpdateTime = 0
+        lastInterfaceName = nil
     }
 }
