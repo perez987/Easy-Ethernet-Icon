@@ -1,5 +1,4 @@
 import Cocoa
-import Network
 import SwiftUI
 
 /// Manages the application's menu and monitors ethernet connection status
@@ -45,6 +44,10 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
 
     // Reference to NetworkMonitor
     private let networkMonitor = NetworkMonitor()
+    private var statusMonitorTimer: DispatchSourceTimer?
+    private var statusUpdateHandler: ((ConnectionStatus) -> Void)?
+    private(set) var currentConnectionStatus: ConnectionStatus = .disconnected
+    private var lastMonitoredServiceName: String?
 
     override init() {
         super.init()
@@ -54,7 +57,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         // Observe changes to showConnectionSpeed setting
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(handleSpeedSettingChange),
+            selector: #selector(handleSettingsChange),
             name: UserDefaults.didChangeNotification,
             object: nil
         )
@@ -75,8 +78,9 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         updateSpeedMonitoring()
     }
 
-    @objc private func handleSpeedSettingChange() {
+    @objc private func handleSettingsChange() {
         updateSpeedMonitoring()
+        refreshEthernetStatus()
     }
 
     private func updateSpeedMonitoring() {
@@ -116,28 +120,62 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
 
     /// Starts monitoring ethernet connection status
     func startMonitoringEthernetStatus(statusUpdate: @escaping (ConnectionStatus) -> Void) {
-        let monitor = NWPathMonitor(requiredInterfaceType: .wiredEthernet)
+        statusUpdateHandler = statusUpdate
 
-        monitor.pathUpdateHandler = { path in
-            let status: ConnectionStatus = path.status == .satisfied
-                ? .connected
-                : .disconnected
-
-            statusUpdate(status)
-
-            DispatchQueue.main.async {
-                self.updateStatusMenuItem(status: status)
+        if statusMonitorTimer == nil {
+            let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
+            timer.schedule(deadline: .now(), repeating: 1.0)
+            timer.setEventHandler { [weak self] in
+                self?.refreshEthernetStatus()
             }
+            statusMonitorTimer = timer
+            timer.resume()
         }
 
-        monitor.start(queue: DispatchQueue.global(qos: .background))
+        refreshEthernetStatus()
     }
 
-    private func updateStatusMenuItem(status: ConnectionStatus) {
-        ethernetStatusItem.title = "Ethernet: \(status == .connected ? "Connected" : "Disconnected")"
+    private func refreshEthernetStatus() {
+        let serviceName = MonitoredNetworkService.configuredServiceName
+        let snapshot = MonitoredNetworkService.currentSnapshot(for: serviceName)
+        let status: ConnectionStatus = snapshot?.isConnected == true
+            ? .connected
+            : .disconnected
+
+        let statusChanged = status != currentConnectionStatus
+        let serviceChanged = serviceName != lastMonitoredServiceName
+
+        currentConnectionStatus = status
+        lastMonitoredServiceName = serviceName
+
+        guard statusChanged || serviceChanged else { return }
+
+        statusUpdateHandler?(status)
+
+        DispatchQueue.main.async {
+            self.updateStatusMenuItem(
+                serviceName: serviceName,
+                status: status,
+                isResolved: snapshot != nil
+            )
+        }
+    }
+
+    private func updateStatusMenuItem(
+        serviceName: String,
+        status: ConnectionStatus,
+        isResolved: Bool
+    ) {
+        if isResolved {
+            ethernetStatusItem.title = "\(serviceName): \(status == .connected ? "Connected" : "Disconnected")"
+        } else {
+            ethernetStatusItem.title = "\(serviceName): Not Found"
+        }
     }
 
     func stopMonitoring() {
+        statusMonitorTimer?.cancel()
+        statusMonitorTimer = nil
         networkMonitor.stopMonitoring()
     }
 

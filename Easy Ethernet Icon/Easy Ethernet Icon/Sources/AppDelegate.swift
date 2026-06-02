@@ -52,7 +52,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Updates the status bar icon when settings change
     @objc func updateIcon() {
         statusBarItem.button?.image = getConnectionImage(
-            status: .disconnected,
+            status: menu.currentConnectionStatus,
             setting: settingsView
         )
     }
@@ -89,10 +89,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Triggers a refresh of the status icon
     func updateStatusIcon() {
-        menu.startMonitoringEthernetStatus { status in
-            DispatchQueue.main.async {
-                self.updateStatusBarIcon(status: status)
-            }
-        }
+        updateStatusBarIcon(status: menu.currentConnectionStatus)
     }
 }
