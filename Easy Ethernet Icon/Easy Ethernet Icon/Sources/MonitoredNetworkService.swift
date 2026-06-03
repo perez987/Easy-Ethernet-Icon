@@ -27,7 +27,7 @@ enum MonitoredNetworkService {
         return interfaceSnapshot(forBSDName: bsdName)
     }
 
-    static func isServiceAvailable(_ serviceName: String) -> Bool {
+    static func isSelectableServiceAvailable(_ serviceName: String) -> Bool {
         guard selectableServiceNames.contains(serviceName) else { return false }
         return bsdInterfaceName(for: serviceName) != nil
     }

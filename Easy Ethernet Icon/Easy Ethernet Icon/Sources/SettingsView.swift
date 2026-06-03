@@ -287,7 +287,7 @@ struct NetworkSettingsView: View {
     }
 
     private func updateSelectedServiceAvailability() {
-        selectedServiceAvailable = MonitoredNetworkService.isServiceAvailable(
+        selectedServiceAvailable = MonitoredNetworkService.isSelectableServiceAvailable(
             monitoredNetworkServiceName
         )
     }
