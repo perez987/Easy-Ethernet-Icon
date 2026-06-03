@@ -25,9 +25,9 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
                 ForEach(SettingsTab.allCases, id: \.self) { tab in
-                    Button(action: { selectedTab = tab }) {
+                    Button(action: { selectedTab = tab }, label: {
                         tabLabel(for: tab)
-                    }
+                    })
                     .buttonStyle(.plain)
                 }
             }
