@@ -23,27 +23,36 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Tab bar at the top
-            HStack {
+            HStack(spacing: 12) {
                 ForEach(SettingsTab.allCases, id: \.self) { tab in
                     Button(action: { selectedTab = tab }, label: {
                         VStack(spacing: 4) {
                             Image(systemName: icon(for: tab))
                                 .font(.system(size: 18, weight: .medium))
-                                .foregroundColor(selectedTab == tab ? .accentColor : .gray)
                             Text(L10n.text(tab.titleKey))
-                                .font(.system(size: 12, weight: .medium))
-                                .foregroundColor(selectedTab == tab ? .accentColor : .gray)
+                                .font(.system(size: 12, weight: .semibold))
                         }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
+                        .foregroundStyle(selectedTab == tab ? .primary : .secondary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 9)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .fill(selectedTab == tab ? .regularMaterial : .clear)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .strokeBorder(
+                                    .white.opacity(selectedTab == tab ? 0.35 : 0.12),
+                                    lineWidth: 1
+                                )
+                        )
                     })
-                    .buttonStyle(PlainButtonStyle())
+                    .buttonStyle(.plain)
                 }
             }
             .navigationTitle(L10n.text("settings.title"))
-            .background(Color(NSColor.windowBackgroundColor).opacity(0.9))
-            .cornerRadius(8)
+            .padding(6)
+            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
             .padding(.horizontal, 20)
             .padding(.top, 10)
 
@@ -66,10 +75,14 @@ struct SettingsView: View {
             }
         }
         .frame(width: 420, height: 304)
-        .background(Color(NSColor.windowBackgroundColor))
-        .cornerRadius(12)
-        .shadow(radius: 8)
-        .padding()
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(.white.opacity(0.28), lineWidth: 1)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .shadow(color: .black.opacity(0.18), radius: 22, x: 0, y: 12)
+        .padding(14)
     }
 
     /// Returns the icon name for each tab
@@ -122,11 +135,11 @@ struct GeneralSettingsView: View {
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
-                    .background(Color(NSColor.controlBackgroundColor))
+                    .background(.thinMaterial)
                     .cornerRadius(6)
                     .overlay(
                         RoundedRectangle(cornerRadius: 6)
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                            .stroke(.white.opacity(0.2), lineWidth: 1)
                     )
                 })
                 .frame(width: 120) // Ensure consistent width for dropdown
@@ -270,11 +283,11 @@ struct NetworkSettingsView: View {
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
-        .background(Color(NSColor.controlBackgroundColor))
+        .background(.thinMaterial)
         .cornerRadius(6)
         .overlay(
             RoundedRectangle(cornerRadius: 6)
-                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                .stroke(.white.opacity(0.2), lineWidth: 1)
         )
     }
 
