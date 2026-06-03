@@ -4,6 +4,11 @@
 
 **Easy Ethernet Icon** is a lightweight macOS menu bar app that monitors Ethernet connection status and speed. It is written in Swift and targets macOS 13.5+.
 
+Designed to monitor only the system's Ethernet interface, a setting has been added that allows the user to choose between two Ethernet interfaces:
+
+- `Ethernet` (built-in primary interface)
+- `Ethernet 2` (interface created by `Heliport.app` + `itlwm.kext` to use Intel Wi-Fi cards not natively supported by macOS).
+
 ## Repository Structure
 
 ```
@@ -40,10 +45,17 @@ SwiftLint is configured in `Easy Ethernet Icon/.swiftlint.yml`. Run it from the 
 
 ```bash
 cd "Easy Ethernet Icon"
-swiftlint
+swiftlint lint --config .swiftlint.yml
 ```
 
-Disabled rules: `function_body_length`, `type_body_length`, `file_length`, `cyclomatic_complexity`, `inclusive_language`, `void_function_in_ternary`.
+Disabled rules:
+
+- `function_body_length`
+- `type_body_length`
+- `file_length`
+- `cyclomatic_complexity`
+- `inclusive_language`
+- `void_function_in_ternary`.
 
 ## Key Conventions
 

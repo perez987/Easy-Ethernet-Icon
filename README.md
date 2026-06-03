@@ -6,6 +6,12 @@
 
 A simple and lightweight macOS menu bar application that shows your Ethernet connection status at a glance.
 
+Designed to monitor only the system's Ethernet interface, a setting has been added that allows the user to choose between two Ethernet interfaces:
+
+- `Ethernet` (built-in primary interface)
+- `Ethernet 2` (interface created by `Heliport.app` + `itlwm.kext` to use Intel Wi-Fi cards not natively supported by macOS).
+
+
 | macOS icon | Windows icon |
 | --- | --- |
 | ![macOS](Images/macOS-icon.png) | ![macOS](Images/macOS-icon.png) |
@@ -21,7 +27,6 @@ A simple and lightweight macOS menu bar application that shows your Ethernet con
 - 🎯 Choose whether to monitor the `Ethernet` or `Ethernet 2` macOS network service
 - 🎨 Choice between macOS and Windows style icons
 - 🚀 Launch at Login support
-- 🏃‍♂️ Lightweight and efficient
 
 ## System Requirements
 
@@ -29,7 +34,7 @@ A simple and lightweight macOS menu bar application that shows your Ethernet con
 
 ## Installation
 
-1. Download the latest release from the [Releases page](../../releases)
+1. Download the latest release from the releases page
 2. Unzip the downloaded file
 3. Drag the app to your Applications folder
 4. Double click to start the app
