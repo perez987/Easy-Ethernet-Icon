@@ -70,4 +70,4 @@ This app:
 - Only monitors the ethernet connection status
 
 ---
-Made by Felix Blome 
+Made by [Felix Blome](https://github.com/felixblome/easy-ethernet-icon)
