@@ -10,6 +10,10 @@ A simple and lightweight macOS menu bar application that shows your Ethernet con
 | --- | --- |
 | ![macOS](Images/macOS-icon.png) | ![macOS](Images/macOS-icon.png) |
 
+| General settings | Network settings |
+| --- | --- |
+| ![macOS](Images/Settings-1.png) | ![macOS](Images/Settings-2.png) |
+
 ## Features
 
 - 🔌 Live ethernet connection status monitoring
