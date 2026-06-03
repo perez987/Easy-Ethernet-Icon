@@ -4,13 +4,14 @@
 ![Swift](https://img.shields.io/badge/Swift-5-blue.svg)
 ![Xcode](https://img.shields.io/badge/Xcode-15-lavender.svg)
 
-A simple and lightweight macOS menu bar application that shows your Ethernet connection status at a glance.
+A simple and lightweight macOS menu bar application that shows your Ethernet connection status at a glance. Developed by [felixblome](https://github.com/felixblome).
 
 Designed to monitor only the system's Ethernet interface, a setting has been added that allows the user to choose between two Ethernet interfaces:
 
 - `Ethernet` (built-in primary interface)
 - `Ethernet 2` (interface created by `Heliport.app` + `itlwm.kext` to use Intel Wi-Fi cards not natively supported by macOS).
 
+You can see the differences between the source [repo](https://github.com/felixblome/easy-ethernet-icon) and this fork [here](DIFFS-WITH-SOURCE-REPO.md).
 
 | macOS icon | Windows icon |
 | --- | --- |
