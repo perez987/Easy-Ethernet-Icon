@@ -14,7 +14,7 @@ A simple and lightweight macOS menu bar application that shows your Ethernet con
 
 - 🔌 Live ethernet connection status monitoring
 - 📊 Live connection speed monitoring 
-- 🎯 Monitor a specific macOS network service (defaults to `Ethernet 2`)
+- 🎯 Choose whether to monitor the `Ethernet` or `Ethernet 2` macOS network service
 - 🎨 Choice between macOS and Windows style icons
 - 🚀 Launch at Login support
 - 🏃‍♂️ Lightweight and efficient
@@ -43,7 +43,7 @@ A simple and lightweight macOS menu bar application that shows your Ethernet con
   - Access Network Settings
   - Configure app settings
   - Quit the application
-- In Settings → Network, set the exact macOS network service name you want to monitor (for HeliPort + itlwm this is typically `Ethernet 2`)
+- In Settings → Network, choose `Ethernet` for the built-in service or `Ethernet 2` for HeliPort + itlwm setups
 
 ## Build from Source
 

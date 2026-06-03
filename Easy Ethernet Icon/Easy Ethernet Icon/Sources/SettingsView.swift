@@ -155,6 +155,7 @@ struct NetworkSettingsView: View {
     @AppStorage("showConnectionSpeed") var showConnectionSpeed: Bool = false
     @AppStorage("speedUnit") var speedUnit: String = "MB/s"
     @AppStorage("refreshInterval") var refreshInterval: Double = 1.0
+    @State private var selectedServiceAvailable = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -166,12 +167,22 @@ struct NetworkSettingsView: View {
                     .font(.system(size: 14))
                     .frame(width: labelWidth, alignment: .leading)
 
-                TextField(
-                    MonitoredNetworkService.defaultServiceName,
-                    text: $monitoredNetworkServiceName
-                )
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                Picker("", selection: $monitoredNetworkServiceName) {
+                    ForEach(MonitoredNetworkService.selectableServiceNames, id: \.self) { serviceName in
+                        Text(serviceName)
+                            .tag(serviceName)
+                    }
+                }
+                .pickerStyle(.menu)
+                .labelsHidden()
                 .frame(width: 180)
+            }
+
+            if !selectedServiceAvailable {
+                Text(L10n.text("settings.network.service_not_found"))
+                    .font(.system(size: 12))
+                    .foregroundColor(.orange)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             // Show speed toggle
@@ -237,6 +248,15 @@ struct NetworkSettingsView: View {
             }
         }
         .padding(.horizontal, 16)
+        .onAppear {
+            monitoredNetworkServiceName = MonitoredNetworkService.normalizedServiceName(
+                monitoredNetworkServiceName
+            )
+            updateSelectedServiceAvailability()
+        }
+        .onChange(of: monitoredNetworkServiceName) { _ in
+            updateSelectedServiceAvailability()
+        }
     }
 
     /// Dropdown-Label-Styling als Wiederverwendbare Funktion
@@ -264,6 +284,12 @@ struct NetworkSettingsView: View {
         }
 
         return String(format: L10n.text("settings.network.interval.seconds_format"), seconds)
+    }
+
+    private func updateSelectedServiceAvailability() {
+        selectedServiceAvailable = MonitoredNetworkService.isSelectableServiceAvailable(
+            monitoredNetworkServiceName
+        )
     }
 }
 

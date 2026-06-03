@@ -18,6 +18,7 @@
 "settings.general.icon.windows" = "Windows";
 "settings.general.icon.macos" = "macOS";
 "settings.network.service_name" = "Network service name";
+"settings.network.service_not_found" = "The selected network service was not found on this Mac.";
 "settings.network.show_speed" = "Show connection speed";
 "settings.network.speed_unit" = "Speed unit";
 "settings.network.refresh_interval" = "Refresh interval";

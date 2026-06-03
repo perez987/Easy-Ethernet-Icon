@@ -3,7 +3,8 @@ import SystemConfiguration
 
 enum MonitoredNetworkService {
     static let userDefaultsKey = "monitoredNetworkServiceName"
-    static let defaultServiceName = "Ethernet 2"
+    static let selectableServiceNames = ["Ethernet", "Ethernet 2"]
+    static let defaultServiceName = "Ethernet"
     // Used only if the app bundle identifier is unavailable while opening SystemConfiguration preferences.
     private static let fallbackPreferencesIdentifier = "Easy Ethernet Icon"
     // Some macOS services wrap the real BSD device in a small stack of virtual interfaces.
@@ -18,19 +19,27 @@ enum MonitoredNetworkService {
     }
 
     static var configuredServiceName: String {
-        let storedValue = UserDefaults.standard.string(forKey: userDefaultsKey)?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-
-        if let storedValue, !storedValue.isEmpty {
-            return storedValue
-        }
-
-        return defaultServiceName
+        normalizedServiceName(UserDefaults.standard.string(forKey: userDefaultsKey))
     }
 
     static func currentSnapshot(for serviceName: String = configuredServiceName) -> InterfaceSnapshot? {
-        guard let bsdName = bsdInterfaceName(for: serviceName) else { return nil }
+        guard let bsdName = bsdInterfaceName(for: normalizedServiceName(serviceName)) else { return nil }
         return interfaceSnapshot(forBSDName: bsdName)
+    }
+
+    static func isSelectableServiceAvailable(_ serviceName: String) -> Bool {
+        guard selectableServiceNames.contains(serviceName) else { return false }
+        return bsdInterfaceName(for: serviceName) != nil
+    }
+
+    static func normalizedServiceName(_ serviceName: String?) -> String {
+        let trimmedValue = serviceName?.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if let trimmedValue, selectableServiceNames.contains(trimmedValue) {
+            return trimmedValue
+        }
+
+        return defaultServiceName
     }
 
     private static func bsdInterfaceName(for serviceName: String) -> String? {
