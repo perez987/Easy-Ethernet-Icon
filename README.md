@@ -27,6 +27,7 @@ Designed to monitor only the system's Ethernet interface, a setting has been add
 - 🎯 Choose whether to monitor the `Ethernet` or `Ethernet 2` macOS network service
 - 🎨 Choice between macOS and Windows style icons
 - 🚀 Launch at Login support
+- 💎 Liquid glass style in settings window 
 
 ## System Requirements
 
