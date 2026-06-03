@@ -11,11 +11,13 @@ Designed to monitor only the system's Ethernet interface, a setting has been add
 - `Ethernet` (built-in primary interface)
 - `Ethernet 2` (interface created by `Heliport.app` + `itlwm.kext` to use Intel Wi-Fi cards not natively supported by macOS).
 
-You can see the differences between the source [repo](https://github.com/felixblome/easy-ethernet-icon) and this fork [here](DIFFS-WITH-SOURCE-REPO.md).
+You can see [here](DIFFS-WITH-SOURCE-REPO.md) the differences between the source repo and this fork.
+
+## Screenshots
 
 | macOS icon | Windows icon |
 | --- | --- |
-| ![macOS](Images/macOS-icon.png) | ![macOS](Images/macOS-icon.png) |
+| ![macOS](Images/macOS-icon.png) | ![macOS](Images/Windows-icon.png) |
 
 | General settings | Network settings |
 | --- | --- |
