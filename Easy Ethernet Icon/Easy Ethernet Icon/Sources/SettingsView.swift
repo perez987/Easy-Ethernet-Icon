@@ -25,28 +25,9 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
                 ForEach(SettingsTab.allCases, id: \.self) { tab in
-                    Button(action: { selectedTab = tab }, label: {
-                        VStack(spacing: 4) {
-                            Image(systemName: icon(for: tab))
-                                .font(.system(size: 18, weight: .medium))
-                            Text(L10n.text(tab.titleKey))
-                                .font(.system(size: 12, weight: .semibold))
-                        }
-                        .foregroundStyle(selectedTab == tab ? .primary : .secondary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 9)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(selectedTab == tab ? .regularMaterial : .clear)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .strokeBorder(
-                                    .white.opacity(selectedTab == tab ? 0.35 : 0.12),
-                                    lineWidth: 1
-                                )
-                        )
-                    })
+                    Button(action: { selectedTab = tab }) {
+                        tabLabel(for: tab)
+                    }
                     .buttonStyle(.plain)
                 }
             }
@@ -92,6 +73,31 @@ struct SettingsView: View {
         case .network: return "network"
         case .about: return "info.circle"
         }
+    }
+
+    private func tabLabel(for tab: SettingsTab) -> some View {
+        let isSelected = selectedTab == tab
+
+        return VStack(spacing: 4) {
+            Image(systemName: icon(for: tab))
+                .font(.system(size: 18, weight: .medium))
+            Text(L10n.text(tab.titleKey))
+                .font(.system(size: 12, weight: .semibold))
+        }
+        .foregroundStyle(isSelected ? .primary : .secondary)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 9)
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(isSelected ? .regularMaterial : .clear)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .strokeBorder(
+                    .white.opacity(isSelected ? 0.35 : 0.12),
+                    lineWidth: 1
+                )
+        )
     }
 }
 
