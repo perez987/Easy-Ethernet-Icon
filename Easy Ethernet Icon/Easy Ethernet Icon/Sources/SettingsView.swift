@@ -89,7 +89,7 @@ struct SettingsView: View {
         .padding(.vertical, 9)
         .background(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(isSelected ? .regularMaterial : .clear)
+                .fill(isSelected ? AnyShapeStyle(.regularMaterial) : AnyShapeStyle(.clear))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
