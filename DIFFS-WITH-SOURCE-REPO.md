@@ -2,8 +2,6 @@
 
 Changes in this fork relative to the upstream source at [felixblome/easy-ethernet-icon](https://github.com/felixblome/easy-ethernet-icon).
 
----
-
 ## v1.4.0
 
 ### Added
