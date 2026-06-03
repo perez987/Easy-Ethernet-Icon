@@ -235,7 +235,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
     private func createSettingsPanel() {
         let panel = NSPanel(
             contentRect: NSRect(x: 0, y: 0, width: 300, height: 200),
-            styleMask: [.titled, .closable],
+            styleMask: [.titled, .closable, .fullSizeContentView],
             backing: .buffered,
             defer: false
         )
@@ -243,6 +243,11 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         panel.center()
         panel.setFrameAutosaveName("Settings")
         panel.contentView = NSHostingView(rootView: SettingsView())
+        panel.titleVisibility = .hidden
+        panel.titlebarAppearsTransparent = true
+        panel.isOpaque = false
+        panel.backgroundColor = .clear
+        panel.isMovableByWindowBackground = true
         panel.delegate = self
         panel.isFloatingPanel = true
         panel.level = .floating
