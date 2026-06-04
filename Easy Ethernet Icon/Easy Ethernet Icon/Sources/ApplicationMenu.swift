@@ -257,8 +257,16 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
 
     /// Opens system network settings
     @objc func openNetworkSettings() {
-        if let url = URL(string: "x-apple.systempreferences:com.apple.preference.network") {
-            NSWorkspace.shared.open(url)
+        let networkSettingsURLStrings = [
+            "x-apple.systempreferences:com.apple.Network-Settings.extension",
+            "x-apple.systempreferences:com.apple.preference.network"
+        ]
+
+        for urlString in networkSettingsURLStrings {
+            guard let url = URL(string: urlString) else { continue }
+            if NSWorkspace.shared.open(url) {
+                return
+            }
         }
     }
 }
