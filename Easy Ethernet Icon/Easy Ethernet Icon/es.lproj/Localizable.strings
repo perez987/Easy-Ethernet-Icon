@@ -4,10 +4,10 @@
 "menu.quit" = "Salir de la aplicación";
 "menu.open_network_settings" = "Abrir configuración de red";
 "menu.settings" = "Configuración";
-"menu.status.connected" = "Conectado";
-"menu.status.disconnected" = "Desconectado";
+"menu.status.connected" = "Conectada";
+"menu.status.disconnected" = "Desconectada";
 "menu.service.status_format" = "%1$@: %2$@";
-"menu.service.not_found_format" = "%@: No encontrado";
+"menu.service.not_found_format" = "%@: No encontrada";
 
 "settings.title" = "Configuración";
 "settings.tab.general" = "General";
