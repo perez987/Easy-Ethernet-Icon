@@ -98,6 +98,7 @@ struct SettingsView: View {
                     lineWidth: 1
                 )
         )
+        .contentShape(Rectangle())
     }
 }
 
