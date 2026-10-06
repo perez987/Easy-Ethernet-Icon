@@ -11,7 +11,7 @@ Designed to monitor only the system's Ethernet interface, a setting has been add
 - `Ethernet` (built-in primary interface)
 - `Ethernet 2` (interface created by `Heliport.app` + `itlwm.kext` to use Intel Wi-Fi cards not natively supported by macOS).
 
-You can see [here](DIFFS-WITH-SOURCE-REPO.md) the differences between the source repo and this fork.
+You can see [here](Fork-repo-differences.md) the differences between the source repo and this fork.
 
 ## Screenshots
 
@@ -30,11 +30,11 @@ You can see [here](DIFFS-WITH-SOURCE-REPO.md) the differences between the source
 - 🎯 Choose whether to monitor the `Ethernet` or `Ethernet 2` macOS network service
 - 🎨 Choice between macOS and Windows style icons
 - 🚀 Launch at Login support
-- 💎 Liquid glass style in settings window 
+- 💎 Liquid glass style in settings window.
 
 ## System Requirements
 
-- macOS 13.5 or newer
+- macOS 13.5 or newer.
 
 ## Installation
 
@@ -42,10 +42,7 @@ You can see [here](DIFFS-WITH-SOURCE-REPO.md) the differences between the source
 2. Unzip the downloaded file
 3. Drag the app to your Applications folder
 4. Double click to start the app
-5. If the app cannot be opened due to security warnings:
-	- Go to System Preferences > Security & Privacy > Scroll down to "Security"
-	- Click Open Anyway next to the blocked app
-7. (Optional) Click the menu bar icon and select Settings to customize
+5. (Optional) Click the menu bar icon and select Settings to customize.
 
 ## Usage
 
@@ -56,7 +53,7 @@ You can see [here](DIFFS-WITH-SOURCE-REPO.md) the differences between the source
   - Access Network Settings
   - Configure app settings
   - Quit the application
-- In Settings → Network, choose `Ethernet` for the built-in service or `Ethernet 2` for HeliPort + itlwm setups
+- In Settings → Network, choose `Ethernet` for the built-in service or `Ethernet 2` for HeliPort + itlwm setups.
 
 ## Build from Source
 
@@ -65,13 +62,14 @@ If you want to build the app yourself:
 1. Clone this repository
 2. Open the project in Xcode
 3. Ensure you have Xcode 14 or newer
-4. Build the project (⌘B)
+4. Build the project (⌘B).
 
 ## Privacy
 
 This app:
 
-- Only monitors the ethernet connection status
+- Only monitors the ethernet connection status.
 
----
-Made by [Felix Blome](https://github.com/felixblome/easy-ethernet-icon)
+## Credits
+
+Original project by [Felix Blome](https://github.com/felixblome/easy-ethernet-icon).
