@@ -10,27 +10,8 @@
 		DC50737D2CDB697A00B012ED /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = DC50737C2CDB697A00B012ED /* LaunchAtLogin */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		DC9195212CDA9D49001BD4BB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DC9195072CDA9D48001BD4BB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DC91950E2CDA9D48001BD4BB;
-			remoteInfo = "Ethernet Menu Icon";
-		};
-		DC91952B2CDA9D49001BD4BB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DC9195072CDA9D48001BD4BB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DC91950E2CDA9D48001BD4BB;
-			remoteInfo = "Ethernet Menu Icon";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		DC91950F2CDA9D48001BD4BB /* Easy Ethernet Icon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Easy Ethernet Icon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC9195202CDA9D49001BD4BB /* Ethernet Menu IconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ethernet Menu IconTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC91952A2CDA9D49001BD4BB /* Ethernet Menu IconUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ethernet Menu IconUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -50,20 +31,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DC91951D2CDA9D49001BD4BB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DC9195272CDA9D49001BD4BB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -79,8 +46,6 @@
 			isa = PBXGroup;
 			children = (
 				DC91950F2CDA9D48001BD4BB /* Easy Ethernet Icon.app */,
-				DC9195202CDA9D49001BD4BB /* Ethernet Menu IconTests.xctest */,
-				DC91952A2CDA9D49001BD4BB /* Ethernet Menu IconUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -111,46 +76,6 @@
 			productReference = DC91950F2CDA9D48001BD4BB /* Easy Ethernet Icon.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DC91951F2CDA9D49001BD4BB /* Ethernet Menu IconTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DC9195372CDA9D49001BD4BB /* Build configuration list for PBXNativeTarget "Ethernet Menu IconTests" */;
-			buildPhases = (
-				DC91951C2CDA9D49001BD4BB /* Sources */,
-				DC91951D2CDA9D49001BD4BB /* Frameworks */,
-				DC91951E2CDA9D49001BD4BB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DC9195222CDA9D49001BD4BB /* PBXTargetDependency */,
-			);
-			name = "Ethernet Menu IconTests";
-			packageProductDependencies = (
-			);
-			productName = "Ethernet Menu IconTests";
-			productReference = DC9195202CDA9D49001BD4BB /* Ethernet Menu IconTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		DC9195292CDA9D49001BD4BB /* Ethernet Menu IconUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DC91953A2CDA9D49001BD4BB /* Build configuration list for PBXNativeTarget "Ethernet Menu IconUITests" */;
-			buildPhases = (
-				DC9195262CDA9D49001BD4BB /* Sources */,
-				DC9195272CDA9D49001BD4BB /* Frameworks */,
-				DC9195282CDA9D49001BD4BB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DC91952C2CDA9D49001BD4BB /* PBXTargetDependency */,
-			);
-			name = "Ethernet Menu IconUITests";
-			packageProductDependencies = (
-			);
-			productName = "Ethernet Menu IconUITests";
-			productReference = DC91952A2CDA9D49001BD4BB /* Ethernet Menu IconUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -163,14 +88,6 @@
 				TargetAttributes = {
 					DC91950E2CDA9D48001BD4BB = {
 						CreatedOnToolsVersion = 16.1;
-					};
-					DC91951F2CDA9D49001BD4BB = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = DC91950E2CDA9D48001BD4BB;
-					};
-					DC9195292CDA9D49001BD4BB = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = DC91950E2CDA9D48001BD4BB;
 					};
 				};
 			};
@@ -192,28 +109,12 @@
 			projectRoot = "";
 			targets = (
 				DC91950E2CDA9D48001BD4BB /* Easy Ethernet Icon */,
-				DC91951F2CDA9D49001BD4BB /* Ethernet Menu IconTests */,
-				DC9195292CDA9D49001BD4BB /* Ethernet Menu IconUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		DC91950D2CDA9D48001BD4BB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DC91951E2CDA9D49001BD4BB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DC9195282CDA9D49001BD4BB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -230,34 +131,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DC91951C2CDA9D49001BD4BB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DC9195262CDA9D49001BD4BB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		DC9195222CDA9D49001BD4BB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DC91950E2CDA9D48001BD4BB /* Easy Ethernet Icon */;
-			targetProxy = DC9195212CDA9D49001BD4BB /* PBXContainerItemProxy */;
-		};
-		DC91952C2CDA9D49001BD4BB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DC91950E2CDA9D48001BD4BB /* Easy Ethernet Icon */;
-			targetProxy = DC91952B2CDA9D49001BD4BB /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DC9195322CDA9D49001BD4BB /* Debug */ = {
@@ -383,8 +257,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 18;
@@ -404,6 +277,7 @@
 				MARKETING_VERSION = 1.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.felixblome.easy-ethernet-icon";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -414,8 +288,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 18;
@@ -435,80 +308,9 @@
 				MARKETING_VERSION = 1.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.felixblome.easy-ethernet-icon";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		DC9195382CDA9D49001BD4BB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ER43ZD2S4U;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "felixblome.Ethernet-Menu-IconTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ethernet Menu Icon.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Ethernet Menu Icon";
-			};
-			name = Debug;
-		};
-		DC9195392CDA9D49001BD4BB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ER43ZD2S4U;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "felixblome.Ethernet-Menu-IconTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ethernet Menu Icon.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Ethernet Menu Icon";
-			};
-			name = Release;
-		};
-		DC91953B2CDA9D49001BD4BB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ER43ZD2S4U;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "felixblome.Ethernet-Menu-IconUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = "Ethernet Menu Icon";
-			};
-			name = Debug;
-		};
-		DC91953C2CDA9D49001BD4BB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ER43ZD2S4U;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "felixblome.Ethernet-Menu-IconUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = "Ethernet Menu Icon";
 			};
 			name = Release;
 		};
@@ -529,24 +331,6 @@
 			buildConfigurations = (
 				DC9195352CDA9D49001BD4BB /* Debug */,
 				DC9195362CDA9D49001BD4BB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DC9195372CDA9D49001BD4BB /* Build configuration list for PBXNativeTarget "Ethernet Menu IconTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DC9195382CDA9D49001BD4BB /* Debug */,
-				DC9195392CDA9D49001BD4BB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DC91953A2CDA9D49001BD4BB /* Build configuration list for PBXNativeTarget "Ethernet Menu IconUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DC91953B2CDA9D49001BD4BB /* Debug */,
-				DC91953C2CDA9D49001BD4BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
