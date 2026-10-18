@@ -5,7 +5,7 @@ import SwiftUI
 class ApplicationMenu: NSObject, NSWindowDelegate {
     private let statusPollingInterval = 1.0
 
-    // Main menu instance
+    /// Main menu instance
     let menu = NSMenu()
 
     /// Represents the possible states of ethernet connection
@@ -14,7 +14,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         case disconnected
     }
 
-    // Menu items
+    /// Menu items
     let ethernetStatusItem = NSMenuItem(
         title: L10n.text("menu.checking_ethernet"),
         action: nil,
@@ -41,7 +41,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         keyEquivalent: "q"
     )
 
-    // Settings window reference
+    /// Settings window reference
     var settingsPanel: NSPanel?
 
     // Reference to NetworkMonitor
@@ -259,7 +259,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
     @objc func openNetworkSettings() {
         let networkSettingsURLStrings = [
             "x-apple.systempreferences:com.apple.Network-Settings.extension",
-            "x-apple.systempreferences:com.apple.preference.network"
+            "x-apple.systempreferences:com.apple.preference.network",
         ]
 
         for urlString in networkSettingsURLStrings {

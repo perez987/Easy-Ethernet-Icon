@@ -324,9 +324,9 @@ struct AboutSettingsView: View {
                 L10n.text("settings.about.more_information"),
                 destination: URL(string: "https://github.com/felixblome/easy-ethernet-icon")!
             )
-                .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.accentColor)
-                .padding(.top, 5)
+            .font(.system(size: 14, weight: .medium))
+            .foregroundColor(.accentColor)
+            .padding(.top, 5)
 
             Text(L10n.text("settings.about.version"))
                 .font(.system(size: 12, weight: .regular))

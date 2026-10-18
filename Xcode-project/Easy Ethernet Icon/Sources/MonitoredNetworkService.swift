@@ -5,10 +5,10 @@ enum MonitoredNetworkService {
     static let userDefaultsKey = "monitoredNetworkServiceName"
     static let selectableServiceNames = ["Ethernet", "Ethernet 2"]
     static let defaultServiceName = "Ethernet"
-    // Used only if the app bundle identifier is unavailable while opening SystemConfiguration preferences.
+    /// Used only if the app bundle identifier is unavailable while opening SystemConfiguration preferences.
     private static let fallbackPreferencesIdentifier = "Easy Ethernet Icon"
-    // Some macOS services wrap the real BSD device in a small stack of virtual interfaces.
-    // Cap recursion so a malformed interface graph cannot recurse indefinitely.
+    /// Some macOS services wrap the real BSD device in a small stack of virtual interfaces.
+    /// Cap recursion so a malformed interface graph cannot recurse indefinitely.
     private static let maxInterfaceNestingDepth = 10
 
     struct InterfaceSnapshot {
@@ -59,7 +59,8 @@ enum MonitoredNetworkService {
 
             if currentServiceName == serviceName,
                let interface = SCNetworkServiceGetInterface(service),
-               let bsdName = bsdName(for: interface) {
+               let bsdName = bsdName(for: interface)
+            {
                 return bsdName
             }
         }

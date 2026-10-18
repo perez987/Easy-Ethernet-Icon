@@ -4,19 +4,19 @@ import SwiftUI
 /// The AppDelegate class handles the core functionality of the menu bar application
 /// It manages the status bar item (icon in the menu bar) and handles connection status updates
 class AppDelegate: NSObject, NSApplicationDelegate {
-    // Singleton instance of AppDelegate that can be accessed throughout the app
+    /// Singleton instance of AppDelegate that can be accessed throughout the app
     private(set) static var instance: AppDelegate!
 
-    // View that handles application settings
+    /// View that handles application settings
     private var settingsView = SettingsView()
 
-    // Fixed size for the menu bar icon (20x20 pixels)
+    /// Fixed size for the menu bar icon (20x20 pixels)
     private let fixedImageSize = 20
 
-    // The actual menu bar item that shows in the system status bar
+    /// The actual menu bar item that shows in the system status bar
     lazy var statusBarItem = NSStatusBar.system.statusItem(withLength: 20)
 
-    // Instance of ApplicationMenu that handles menu creation and ethernet monitoring
+    /// Instance of ApplicationMenu that handles menu creation and ethernet monitoring
     let menu = ApplicationMenu()
 
     /// Called when the application finishes launching
