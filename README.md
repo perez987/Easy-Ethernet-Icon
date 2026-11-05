@@ -16,7 +16,7 @@ You can see [here](Fork-repo-differences.md) the differences between the source 
 ## Motivation
 
 I have developed this fork because the user *laobamac* recently released a version of [itlwm.kext](https://github.com/laobamac/itlwm) that does not require HeliPort to function. This is beneficial as it noticeably speeds up the internet connection—making it available even before reaching the desktop.<br>
-However, a drawback is that there is no Wi-Fi icon in the menu bar. This app provides a Wi-Fi icon for the menu bar with two states: connected and disconnected. Since it also monitors the 'Ethernet 2' connection, I appreciate having this icon visible. It is essentially a cosmetic detail, but without the Wi-Fi icon, it feels like something I’m accustomed to is missing.<br>
+However, a drawback is that there is no Wi-Fi icon in the menu bar. This app provides a Wi-Fi icon for the menu bar with two states: connected and disconnected. While it  monitors the 'Ethernet 2' connection, I appreciate having this icon visible. It is essentially a cosmetic detail, but without the Wi-Fi icon, it feels like something I’m accustomed to is missing.<br>
 On the other hand, this app does not interact in any way with itlwm or the Wi-Fi stack, and it does not interfere with the operation of this connection.
 
 ## Screenshots
