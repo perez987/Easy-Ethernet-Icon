@@ -72,7 +72,7 @@ If you want to build the app yourself:
 
 This app:
 
-- Only monitors the ethernet connection status.
+- Only monitors the selected connection status.
 
 ## Credits
 
