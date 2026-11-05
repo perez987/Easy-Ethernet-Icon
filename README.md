@@ -15,13 +15,15 @@ You can see [here](Fork-repo-differences.md) the differences between the source 
 
 ## Screenshots
 
-| macOS icon | Windows icon |
-| --- | --- |
-| ![macOS](Images/macOS-icon.png) | ![macOS](Images/Windows-icon.png) |
+| macOS icon |
+| --- |
+| ![macOS](Images/Easy-Ethernet-Icon-0.png) |
 
-| General settings | Network settings |
-| --- | --- |
-| ![macOS](Images/Settings-1.png) | ![macOS](Images/Settings-2.png) |
+| Settings |
+| --- |
+| ![macOS](Images/Easy-Ethernet-Icon-1.png) |
+| ![macOS](Images/Easy-Ethernet-Icon-1.png) | 
+| ![macOS](Images/Easy-Ethernet-Icon-3.png) |
 
 ## Features
 
