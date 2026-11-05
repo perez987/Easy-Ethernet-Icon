@@ -15,7 +15,7 @@ You can see [here](Fork-repo-differences.md) the differences between the source 
 
 ## Screenshots
 
-| Menu bar and settings |
+|     |     |
 | --- | --- |
 | ![macOS](Images/Easy-Ethernet-Icon-0.png) | ![macOS](Images/Easy-Ethernet-Icon-1.png) |
 | ![macOS](Images/Easy-Ethernet-Icon-2.png) | ![macOS](Images/Easy-Ethernet-Icon-3.png) |
