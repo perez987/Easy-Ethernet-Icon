@@ -28,7 +28,7 @@ You can see [here](Fork-repo-differences.md) the differences between the source 
 - 🔌 Live ethernet connection status monitoring
 - 📊 Live connection speed monitoring 
 - 🎯 Choose whether to monitor the `Ethernet` or `Ethernet 2` macOS network service
-- 🎨 Choice between macOS and Windows style icons
+- 🎨 Choice between macOS, Windows and itlwm style icons (the itlwm icon is intended for Hackintosh systems using HeliPort + itlwm)
 - 🚀 Launch at Login support
 - 💎 Liquid glass style in settings window.
 
@@ -53,6 +53,7 @@ You can see [here](Fork-repo-differences.md) the differences between the source 
   - Access Network Settings
   - Configure app settings
   - Quit the application
+- In Settings → General, choose the icon style: macOS, Windows or itlwm.
 - In Settings → Network, choose `Ethernet` for the built-in service or `Ethernet 2` for HeliPort + itlwm setups.
 
 ## Build from Source
@@ -61,7 +62,7 @@ If you want to build the app yourself:
 
 1. Clone this repository
 2. Open the project in Xcode
-3. Ensure you have Xcode 14 or newer
+3. Ensure you have Xcode 15 or newer; the project is in the `Xcode-project` folder
 4. Build the project (⌘B).
 
 ## Privacy

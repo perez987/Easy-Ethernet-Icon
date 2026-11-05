@@ -12,20 +12,25 @@ Designed to monitor only the system's Ethernet interface, a setting has been add
 ## Repository Structure
 
 ```
-Easy Ethernet Icon/
-├── Easy Ethernet Icon/          # Main app target
-│   ├── Sources/                 # Swift source files
-│   │   ├── Main.swift
-│   │   ├── AppDelegate.swift
-│   │   ├── ApplicationMenu.swift
-│   │   ├── NetworkMonitor.swift
-│   │   ├── MonitoredNetworkService.swift
-│   │   ├── SettingsView.swift
-│   │   └── Localization.swift
-│   ├── Assets.xcassets/
-│   ├── en.lproj/
-│   └── es.lproj/
-└── Easy Ethernet Icon.xcodeproj/
+Easy-Ethernet-Icon/
+├── Images/                      # README screenshots
+├── Xcode-project/
+│   ├── .swiftlint.yml
+│   ├── Easy Ethernet Icon/      # Main app target
+│   │   ├── Sources/             # Swift source files
+│   │   │   ├── Main.swift
+│   │   │   ├── AppDelegate.swift
+│   │   │   ├── ApplicationMenu.swift
+│   │   │   ├── NetworkMonitor.swift
+│   │   │   ├── MonitoredNetworkService.swift
+│   │   │   ├── SettingsView.swift
+│   │   │   └── Localization.swift
+│   │   ├── Assets.xcassets/     # Default, macOS and itlwm icon sets
+│   │   ├── en.lproj/
+│   │   └── es.lproj/
+│   └── Easy Ethernet Icon.xcodeproj/
+├── README.md
+└── Fork-repo-differences.md
 ```
 
 ## Build & Run
@@ -33,7 +38,7 @@ Easy Ethernet Icon/
 Open the project in Xcode and build with **⌘B**, or from the command line:
 
 ```bash
-xcodebuild -project "Easy Ethernet Icon/Easy Ethernet Icon.xcodeproj" \
+xcodebuild -project "Xcode-project/Easy Ethernet Icon.xcodeproj" \
   -scheme "Easy Ethernet Icon" \
   -configuration Debug \
   build
@@ -41,10 +46,10 @@ xcodebuild -project "Easy Ethernet Icon/Easy Ethernet Icon.xcodeproj" \
 
 ## Linting
 
-SwiftLint is configured in `Easy Ethernet Icon/.swiftlint.yml`. Run it from the repo root:
+SwiftLint is configured in `Xcode-project/.swiftlint.yml`. Run it from the repo root:
 
 ```bash
-cd "Easy Ethernet Icon"
+cd "Xcode-project"
 swiftlint lint --config .swiftlint.yml
 ```
 
@@ -59,7 +64,9 @@ Disabled rules:
 
 ## Key Conventions
 
-- **Xcode project uses `PBXFileSystemSynchronizedRootGroup`**: new Swift files placed under `Easy Ethernet Icon/Easy Ethernet Icon/Sources/` are automatically picked up by the project — no manual project.pbxproj edits needed.
+- **Xcode project uses `PBXFileSystemSynchronizedRootGroup`**: new Swift files placed under `Xcode-project/Easy Ethernet Icon/Sources/` are automatically picked up by the project — no manual project.pbxproj edits needed.
 - **External dependency**: `LaunchAtLogin` (Swift Package) for Login Item support.
+- **Icon styles**: `macOS`, `Windows` (asset prefix `Default`) and `itlwm` (for Hackintosh systems using HeliPort + itlwm). `AppDelegate.getConnectionImage` builds the asset name as `<prefix>_EthernetConnected` / `<prefix>_EthernetDisconnected`.
+- **No tests**: the project has no test targets, and the shared scheme has no testables, so Product ▸ Test is disabled.
 - **Minimum deployment target**: macOS 13.5.
 - **Localization**: English (`en.lproj`) and Spanish (`es.lproj`) string catalogs.

@@ -2,6 +2,12 @@
 
 Changes in this fork relative to the upstream source at [felixblome/easy-ethernet-icon](https://github.com/felixblome/easy-ethernet-icon).
 
+## Current state
+
+- **itlwm icon style** — Third icon set (`itlwm_EthernetConnected` / `itlwm_EthernetDisconnected`) selectable in Settings → General, intended for Hackintosh systems using HeliPort + itlwm.
+- **No test action** — The shared scheme no longer references non-existent test targets, so Xcode's Product ▸ Test does nothing misleading.
+- **Repository layout** — Xcode project lives in `Xcode-project/`; README screenshots in `Images/`.
+
 ## v1.4.2
 
 ### Added
